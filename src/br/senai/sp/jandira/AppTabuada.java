@@ -1,26 +1,34 @@
 package br.senai.sp.jandira;
 
-import java.util.Scanner;
-
+import br.senai.jandira.gui.FrameTabuada;
 import br.senai.jandira.model.Tabuada;
 
 public class AppTabuada {
 
 	public static void main(String[] args) {
 		
-		Scanner numeros = new Scanner(System.in);
+		
+		FrameTabuada tela = new FrameTabuada();
+		tela.titulo = "Tabuada";
+		tela.largura = 450;
+		tela.altura = 700;
+		tela.criarTela();
+		
 		Tabuada usuario = new Tabuada();
+		usuario.multiplicando = 3;
+		usuario.minimoMultiplicador = 8;
+		usuario.maximoMultiplicador = 43;
 		
 		
-		System.out.print("Qual o multiplicando? ");
-		numeros.nextInt();
+		String[] resultado = usuario.getTabuada();
 		
-		System.out.print("Qual o mínimo multiplicando? ");
-		numeros.nextInt();
+		int i = 0;
+		while (i < resultado.length) {
+			System.out.println(resultado[i]);
+			i++;
+		}
 		
-		System.out.println("Qual o máximo multiplicando? ");
-		numeros.nextInt();
-		
+	
 			}
 
 }
