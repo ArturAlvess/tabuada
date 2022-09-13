@@ -9,6 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.Vector;
 
 import javax.swing.DefaultListModel;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -34,6 +35,7 @@ public class FrameTabuada {
 		tela.setSize(largura, altura);
 		tela.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		tela.setLayout(null);
+		tela.getContentPane().setBackground(new Color(212, 230, 255));
 		
 		
 		// Pegar o container para colocar os componentes
@@ -106,6 +108,13 @@ public class FrameTabuada {
 		maximo.setForeground(new Color(61, 159, 245));
 		maximo.setBounds(60, 240, 250, 80);
 		
+		
+		//Imagem 
+		
+		ImageIcon icon = new ImageIcon("C:\\Users\\22282175\\eclipse-workspace\\tabuada\\img-tabuada\\icon.png");
+		JLabel LabelIcon = new JLabel(icon);
+		LabelIcon.setBounds(10, 30, 70, 60);
+		
 		// Scroll Pane
 		
 		JScrollPane scrollResultado = new JScrollPane();
@@ -128,11 +137,69 @@ public class FrameTabuada {
 		painel.add(buttonLimpar);
 		painel.add(listResultado);
 		painel.add(scrollResultado);
+		painel.add(LabelIcon);
 		
 		// painel visivel
 
 				tela.setVisible(true);
 		// listener para botão calcular
+				
+				buttonCalcular.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						if(textFieldMult.getText().isEmpty()) {
+							JOptionPane.showMessageDialog(null, "O multiplicando é obrigatório", "Erro!", JOptionPane.OK_OPTION);
+							textFieldMult.requestFocus();
+							
+						} else if (textFieldMin.getText().isEmpty()) {
+							JOptionPane.showMessageDialog(null, "O mínimo multiplicador é obrigatório.", "Erro!", JOptionPane.OK_OPTION);
+							textFieldMin.requestFocus();
+						} else if (textFieldMax.getText().isEmpty()) {
+							JOptionPane.showMessageDialog(null, "O máximo multiplicador é obrigatório.", "Erro!", JOptionPane.OK_OPTION);
+							textFieldMax.requestFocus();
+							
+						} else {
+						Tabuada tabuada = new Tabuada();
+						tabuada.multiplicando = Integer.parseInt(textFieldMult.getText());
+						tabuada.minimoMultiplicador = Integer.parseInt(textFieldMin.getText());
+						tabuada.maximoMultiplicador = Integer.parseInt(textFieldMax.getText());
+						
+						if (tabuada.maximoMultiplicador >= tabuada.minimoMultiplicador) {
+							listResultado.setListData(tabuada.getTabuada());
+							scrollResultado.getViewport().add(listResultado);
+		
+						} else {
+							JOptionPane.showMessageDialog(null, "O mínimo multiplicador deve ser menor que o máximo.", "Erro!", JOptionPane.OK_OPTION);
+							textFieldMult.setText("");
+							textFieldMin.setText("");
+							textFieldMax.setText("");
+						}
+						
+						
+							
+						}
+						
+						
+					}
+				});
+				
+			// listener para o botão limpar	
+				buttonLimpar.addActionListener(new ActionListener() {
+					
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						
+						DefaultListModel<String> listModel = new DefaultListModel<>();
+						listResultado.setModel(listModel);
+						textFieldMax.setText("");
+						textFieldMin.setText("");
+						textFieldMult.setText("");
+						textFieldMult.requestFocus();
+						
+					}
+				});
 		
 		
 				
